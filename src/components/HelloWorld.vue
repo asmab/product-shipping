@@ -3,9 +3,54 @@
   <div class="main-container">
 	<div class="content">
 
+    <div class="top-section">
+      	<div class="product-grid__product-wrapper" v-for="item in topProducts" >
+          {{item.category}}
+					<div class="product-grid__product">
+						<div class="product-grid__img-wrapper">			
+							<img :src="getIcon(item.product.product)" class="product-grid__img" />
+            </div>
+						<span class="product-grid__title">{{ item.product.product}}</span>
+						<span class="product-grid__price">               
+              <span class="cost">{{ item.product.cost}}</span>
+              {{item.product.currency}}
+            </span>
+            <span class="product-grid__time">
+              Lead time :         
+              <span class="days">{{ item.product.lead_time}} Days</span>          
+            </span>
+            
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" 
+              role="progressbar" 
 
-  	<button @click="enableSort = !enableSort">Toggle sort</button>
+              :style="getWidth(item.product.lead_time)">
+              </div>
+            </div>
+				  </div>
+        </div>
 
+    </div>
+
+    <div class="sorting-wrapper">
+      Sort by
+      <select class="select-class" 
+      v-model="selected">
+        <option v-for="option in options" v-bind:value="option.id" >{{ option.name }}</option>
+      </select>
+    </div>
+
+  	<!-- <button @click="enableSort = !enableSort">Toggle sort</button> -->
+    Filtred by :
+    <div class="form-check form-check-inline" v-for="item in companies">
+      <input class="form-check-input" 
+      type="checkbox" 
+      :id="item" 
+      :value="item"
+      v-model="selectedCompanies"
+      @change="handleCompanies(item)">
+      <label class="form-check-label" for="inlineCheckbox1">{{item}}</label>
+    </div>
 
 		<!-- content here -->
 		<div class="product-grid product-grid--flexbox">
@@ -31,18 +76,16 @@
             <div class="progress">
               <div class="progress-bar progress-bar-striped progress-bar-animated" 
               role="progressbar" 
-              aria-valuenow="75" 
-              aria-valuemin="0" 
-              aria-valuemax="100"
+
               :style="getWidth(product.lead_time)">
               </div>
             </div>
 				</div>
 				<!-- end Single product --> 
 
-			</div>		
-		</div>
-	</div>
+         </div>		
+      </div>
+    </div>
 
 	</div>
 
@@ -57,28 +100,57 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       productList: [],
-      enableSort: false,
-  	  sorting: -1,
+      sorting: -1,
+      selected: '',
+      options: [{name: 'Cheapest',id:1}, {name:'Fastest',id:2}],
+      companies: ['dhl','tnt','ups','dsv'],
+      selectedCompanies: [],
+      topProducts: []
     }
   },
   mounted(){
     this.productList = productsData.items
   },
-    computed: {
+  computed: {
   	sortedItems () {
-    	if (this.enableSort) {
-    		return this.productList.slice(0).sort((a, b) => a.cost < b.cost ? this.sorting : -this.sorting )
-     	} else {
-    		return this.productList
+      //filter checked
+      if(this.selectedCompanies.length > 0){
+        var filtredProducts = []
+        this.selectedCompanies.forEach(item => {
+
+            this.productList.forEach(product => {
+              if(product.product.indexOf(item) > -1){
+                filtredProducts.push(product)
+              }
+            })         
+          
+        })
+        return filtredProducts
       }
-    },
+      var result = []
+      if (this.selected === 1){
+        result = this.productList.slice(0).sort((a, b) => a.cost < b.cost ? this.sorting : -this.sorting )
+        this.topProducts.push({category: 'Cheapest', product: result[0]})
+        return result
+      } else if (this.selected === 2) {
+        result = this.productList.slice(0).sort((a, b) => a.lead_time < b.lead_time ? this.sorting : -this.sorting )
+        this.topProducts.push({category:'Fastest', product: result[0]})
+        return result
+      } else return this.productList
+    }
   },
-    watch: {
-  	sortedItems () {
+  watch: {
+  	sortedItems() {
     	console.log('sortedItems changed')
     },
+    selected() {
+      console.log('selected is', this.selected)
+    },
+    selectedCompanies: function (newVal, oldVal) {
+      // Do what you want with the selected objects:
+      console.log(newVal)
+    }
   },
   methods: {
     getIcon: function (name, ext = 'svg') {
@@ -87,9 +159,10 @@ export default {
     },
     getWidth: function (days) {
         const percentage = days === undefined ? '0' : days * 10
-
-        console.log('checkedWidth', percentage)
         return 'width: ' + percentage + '%'
+    },
+    handleCompanies(item){
+      console.log('items is ', item)
     }
   }
 }
@@ -102,8 +175,12 @@ export default {
 .wrapper {
 	width: 68em;
 }
-
-
+.sorting-wrapper {
+  text-align: left;
+}
+.select-class{
+  width: 100px;
+}
 
 
 // Start here
@@ -111,7 +188,6 @@ export default {
 $title-color: #222;
 $font-color: #777;
 $light-gray: #eee;
-$secondary: #42A5F5;
 $blue-color: blue;
 
 // product
@@ -210,8 +286,6 @@ $product-box-shadow: 0px 0px 0px 1px $light-gray;
 	}
 
 }
-
-
 
 // progress bar
 
