@@ -6,8 +6,8 @@
         <input type="radio" name="tabs" id="tab1" checked>
         <div class="tab-label-content" id="tab1-content">
           <label for="tab1">Cheapest<br>
-            <span class="price-wrapper">
-              <span> {{cheapest.cost}} </span><span> {{cheapest.currency}}</span>
+            <span class="details-wrapper">
+              <span class="cost"> {{cheapest.cost}} </span><span class="currency"> {{cheapest.currency}}</span>
             </span>
           </label>
           
@@ -18,8 +18,10 @@
         
         <input type="radio" name="tabs" id="tab2">
         <div class="tab-label-content" id="tab2-content">
-          <label for="tab2">Fastest
-            <span> {{fastest.lead_time}} </span><span> Days</span>
+          <label for="tab2">Fastest<br>
+            <span class="details-wrapper">
+              <span class="days"> {{fastest.lead_time}} </span><span class="info"> {{lead_time_days}}</span>
+            </span>
           </label>
           
           <div class="tab-content">
@@ -52,11 +54,6 @@ export default {
     return {
       productList: [],
       sorting: -1,
-      selected: '',
-      options: [{name: 'Cheapest',id:1}, {name:'Fastest',id:2}],
-      companies: ['dhl','tnt','ups','dsv'],
-      selectedCompanies: [],
-      topProducts: [],
       cheapest: {},
       fastest: {}
     }
@@ -76,9 +73,7 @@ export default {
   	itemsSortedByPrice() {
       this.cheapest = this.itemsSortedByPrice[0]
       this.fastest = this.itemsSortedByTime[0]
-
-      console.log('cheapest :', this.cheapest.cost)
-      console.log('fastest:', this.fastest.lead_time)
+      this.lead_time_days = this.fastest.lead_time > 1 ? 'days' : 'day'
     }
   },
   methods: {
@@ -153,7 +148,16 @@ label {
   height: 56px;
   transition: color 0.2s ease;
   width: 100%;
-  font-size: 14px
+  font-size: 14px;
+
+  .details-wrapper{
+    .cost,.days{
+      font-size: 14px;
+    }
+    .currency,.info{
+      font-size: 12px;
+    }
+  }
 }
 
 .slide {
