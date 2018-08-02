@@ -31,9 +31,16 @@
         
         <input type="radio" name="tabs" id="tab3">
         <div class="tab-label-content" id="tab3-content">
-          <label for="tab3">Best</label>
+          <label for="tab3">Best<br>
+            <span class="details-wrapper">
+              <span class="days"> {{bestDealDetails.cost}}<span class="currency"> {{cheapest.currency}}</span> / </span>
+              <span class="days"> {{bestDealDetails.lead_time}} days </span>
+            </span>
+          </label>
+
           <div class="tab-content">
-            COMING ....
+            <ProductList :sortedItems="bestDeals"/>
+            {{ bestDeals}}
           </div>
         </div>
         
@@ -55,7 +62,9 @@ export default {
       productList: [],
       sorting: -1,
       cheapest: {},
-      fastest: {}
+      fastest: {},
+      lead_time_days: '',
+      bestDealDetails: {}
     }
   },
   mounted(){
@@ -67,6 +76,22 @@ export default {
     },
     itemsSortedByTime(){
         return this.productList.slice(0).sort((a, b) => a.lead_time < b.lead_time ? this.sorting : -this.sorting )
+    },
+    bestDeals(){
+      var self = this
+      var bestDealsList = []
+      self.itemsSortedByPrice.forEach(function (value1, i){
+
+          self.itemsSortedByTime.forEach(function (value2, j){
+            if (value1 === value2){
+              bestDealsList.push({product: value1, index: i+j})
+            }
+        })
+        bestDealsList = bestDealsList.sort(function(a, b){return a.index-b.index})
+      })
+      bestDealsList = bestDealsList.map(obj => obj.product)
+      
+      return  bestDealsList
     }
   },
   watch: {
@@ -74,6 +99,7 @@ export default {
       this.cheapest = this.itemsSortedByPrice[0]
       this.fastest = this.itemsSortedByTime[0]
       this.lead_time_days = this.fastest.lead_time > 1 ? 'days' : 'day'
+      this.bestDealDetails = this.bestDeals[0]
     }
   },
   methods: {
