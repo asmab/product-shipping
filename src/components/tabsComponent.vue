@@ -1,38 +1,24 @@
 <template>
-    <div class="main-content">
+    <div>
 
     <div class="tab-wrap">
     
         <input type="radio" name="tabs" id="tab1" checked>
         <div class="tab-label-content" id="tab1-content">
-          <label for="tab1">Cheapest<br>
-            <span class="price-wrapper">
-              <span> {{cheapest.cost}} </span><span> {{cheapest.currency}}</span>
-            </span>
-          </label>
-          
-          <div class="tab-content">
-            <ProductList :sortedItems="itemsSortedByPrice"/>
-          </div>
+        <label for="tab1">Tab 1</label>
+        <div class="tab-content">TAB 1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis laoreet eget lectus eu congue. Nam finibus urna eget nisl aliquam, in dictum ligula feugiat. Donec mollis ligula purus, et interdum velit bibendum eget. Aliquam magna diam, tristique eu libero nec, sagittis finibus sapien. Cras a ex ultricies, faucibus elit sagittis, maximus nisi. Donec quis arcu sapien. Aenean risus nibh, varius sed porttitor a, ornare nec leo. Sed vitae lacus in ipsum varius sagittis. Ut in quam cursus, ullamcorper sapien posuere, laoreet elit. Suspendisse interdum, risus ut ultricies scelerisque, nibh est commodo leo, sed tristique nisl odio et turpis. Fusce pellentesque nunc nec arcu feugiat accumsan. Praesent mauris sem, eleifend sit amet tortor in, cursus vehicula arcu. Curabitur convallis sit amet nunc ac feugiat. Sed at risus id diam porta pretium id vel felis. Donec nec dui id nisl hendrerit laoreet eu id odio.</div>
         </div>
         
         <input type="radio" name="tabs" id="tab2">
         <div class="tab-label-content" id="tab2-content">
-          <label for="tab2">Fastest
-            <span> {{fastest.lead_time}} </span><span> Days</span>
-          </label>
-          
-          <div class="tab-content">
-            <ProductList :sortedItems="itemsSortedByTime"/>
-          </div>
+        <label for="tab2">Tab 2</label>
+        <div class="tab-content">TAB 2 - Quisque egestas, purus in tempor vulputate, diam augue mollis quam, quis elementum ipsum ex a risus. Quisque sed augue porta, facilisis felis vitae, cursus mi. Nullam mollis magna eget tincidunt mollis. Sed suscipit placerat ultricies. Sed eget lorem et ipsum ultricies congue eu a enim. Nam quis ex nec lorem dignissim suscipit eu ut felis. Vivamus molestie felis id purus congue, vel ultrices sem molestie.</div>
         </div>
         
         <input type="radio" name="tabs" id="tab3">
         <div class="tab-label-content" id="tab3-content">
-          <label for="tab3">Best</label>
-          <div class="tab-content">
-            COMING ....
-          </div>
+        <label for="tab3">Tab 3</label>
+        <div class="tab-content">TAB 3 - Donec vulputate ante ac ligula vestibulum, id mollis diam commodo. Integer at consequat magna. Sed elit sem, dictum nec porttitor ac, ultrices id enim. Morbi semper eros a enim malesuada, eu finibus erat dictum. Ut vitae orci a odio sagittis malesuada. Cras volutpat vel lorem in tempor. Duis ultricies lectus sit amet tellus vehicula faucibus. Etiam sed leo ac erat tempor feugiat at quis ipsum. Mauris pellentesque nisl lorem, ac finibus sapien sagittis vel. Donec et lobortis est. Vestibulum dignissim ligula nec erat interdum, quis sollicitudin metus pretium. Vestibulum quis dui sapien. Proin commodo justo ac orci elementum molestie. Aliquam mattis orci vitae volutpat commodo.</div>
         </div>
         
         <div class="slide"></div>
@@ -42,48 +28,7 @@
 </template>
 
 <script>
-import ProductList from '@/components/ProductList'
-import productsData from '../assets/products.json'
 
-
-export default {
-  components: { ProductList },
-  data () {
-    return {
-      productList: [],
-      sorting: -1,
-      selected: '',
-      options: [{name: 'Cheapest',id:1}, {name:'Fastest',id:2}],
-      companies: ['dhl','tnt','ups','dsv'],
-      selectedCompanies: [],
-      topProducts: [],
-      cheapest: {},
-      fastest: {}
-    }
-  },
-  mounted(){
-    this.productList = productsData.items
-  },
-  computed: {
-    itemsSortedByPrice(){
-      return this.productList.slice(0).sort((a, b) => a.cost < b.cost ? this.sorting : -this.sorting )
-    },
-    itemsSortedByTime(){
-        return this.productList.slice(0).sort((a, b) => a.lead_time < b.lead_time ? this.sorting : -this.sorting )
-    }
-  },
-  watch: {
-  	itemsSortedByPrice() {
-      this.cheapest = this.itemsSortedByPrice[0]
-      this.fastest = this.itemsSortedByTime[0]
-
-      console.log('cheapest :', this.cheapest.cost)
-      console.log('fastest:', this.fastest.lead_time)
-    }
-  },
-  methods: {
-  }
-}
 </script>
 
 <style lang="scss" scoped>
@@ -105,13 +50,25 @@ $num-of-tabs: 3;
   }
 }
 
-.main-content {
-  margin-right: 300px;
-  margin-left: 300px;
+html, body {
+  width: 100%;
+}
+
+h1 {
+  font-size: 26px;
+  background: $cyan;
+  color: white;
+  padding: 40px 0 100px 20%;
+  margin-bottom: 50px;
+}
+
+label, p, a, h1, div {
+  font-family: Roboto, sans-serif;
 }
 
 .tab-wrap {
-  width: 100%;
+  width: 50%;
+  margin-left: 20%;
   position: relative;
   display: flex;
 }
@@ -123,8 +80,6 @@ input[type="radio"][name="tabs"] {
     + .tab-label-content {
       label {
         color: white;
-        font-size: 18px;
-        font-weight: bold;
       }
       .tab-content {
         display: block;
@@ -146,14 +101,13 @@ label {
   color: rgba(255,255,255,0.8);
   background-color: $cyan;
   box-sizing: border-box;
-  //display: inline-flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   height: 56px;
   transition: color 0.2s ease;
   width: 100%;
-  font-size: 14px
 }
 
 .slide {
@@ -170,11 +124,10 @@ label {
   width: 100%;
   .tab-content {
     position: absolute;
-    top: 60px;
-    left: 0px;
+    top: 100px;
+    left: 16px;
     line-height: 130%;
     display: none;
-
   }
 }
 
