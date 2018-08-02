@@ -1,42 +1,42 @@
 <template>
-    		<!-- content here -->
-		<div class="product-grid product-grid--flexbox">
-			<div class="product-grid__wrapper">
-				<!-- Product list start here -->
+    <!-- content here -->
+	<div class="product-grid product-grid--flexbox">
+		<div class="product-grid__wrapper">
 
-				<!-- Single product -->
-				<div class="product-grid__product-wrapper" v-for=" product in sortedItems" >
-					<div class="product-grid__product">
-						<div class="product-grid__img-wrapper">			
-							<img :src="getIcon(product.product)" class="product-grid__img" />
-            </div>
-						<span class="product-grid__title">{{ product.product}}</span>
-						<span class="product-grid__price">               
-              <span class="cost">{{ product.cost}}</span>
-              {{product.currency}}
-            </span>
-            <span class="product-grid__time">
-              Lead time :         
-              <span class="days">{{ product.lead_time}} Days</span>          
-            </span>
-            
-            <div class="progress">
-              <div class="progress-bar progress-bar-striped progress-bar-animated" 
-              role="progressbar" 
+			<!-- Product list start here -->
+			<div class="product-grid__product-wrapper" v-for=" product in sortedItems" >
+				<div class="product-grid__product">
 
-              :style="getWidth(product.lead_time)">
-              </div>
-            </div>
+                    <!--Product Logo -->
+					<div class="product-grid__img-wrapper">			
+						<img :src="getIcon(product.product)" class="product-grid__img" />
+                    </div>
+
+                    <!--Product details -->
+					<span class="product-grid__title">{{ product.product}}</span>
+					<span class="product-grid__price">               
+                        <span class="cost">{{ product.cost}}</span>
+                        {{product.currency}}
+                    </span>
+                    <span class="product-grid__time">
+                        Lead time :         
+                        <span class="days">{{ product.lead_time}} Days</span>          
+                    </span>
+
+                    <!-- Product lead time - ProgressBar-->
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                        role="progressbar"
+                        :style="getWidth(product.lead_time)">
+                        </div>
+                    </div>
 				</div>
-				<!-- end Single product --> 
+            </div>
 
-         </div>		
-      </div>
+        </div>
     </div>
-
 </template>
 <script>
-
 
 export default {
     props:{
@@ -47,14 +47,11 @@ export default {
     methods: {
         getIcon: function (name, ext = 'svg') {
             var newname = name.substr(0,name.indexOf('_'))
-            return require(`../assets/img/${newname}.${ext}`)
+            return require(`@/assets/img/${newname}.${ext}`)
         },
         getWidth: function (days) {
             const percentage = days === undefined ? '0' : days * 10
             return 'width: ' + percentage + '%'
-        },
-        handleCompanies(item){
-            console.log('items is ', item)
         }
     }
 }
@@ -62,6 +59,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+@import '@/assets/global.scss';
+$light-gray: #eee;
+$product-box-shadow: 0px 0px 0px 1px $light-gray;
 
 .wrapper {
 	width: 68em;
@@ -72,21 +72,9 @@ export default {
 .select-class{
   width: 100px;
 }
-
-// Start here
-
-$title-color: #222;
-$font-color: #777;
-$light-gray: #eee;
-$blue-color: blue;
-
-// product
-$product-box-shadow: 0px 0px 0px 1px $light-gray;
-
 .main-container {
-	color: $font-color;
 	font-family: 'Open Sans', Arial, sans-serif;
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .product-grid {
@@ -96,13 +84,11 @@ $product-box-shadow: 0px 0px 0px 1px $light-gray;
 		.product-grid__wrapper {
 			display: flex;
 			flex-wrap: wrap;
-		}
-		
+		}		
 		.product-grid__title {
 			height: auto;
 		}
-	}
-	
+	}	
 
 	&__wrapper {
 		margin-left: -1rem;
@@ -113,21 +99,21 @@ $product-box-shadow: 0px 0px 0px 1px $light-gray;
 	&__product-wrapper {
 		padding: 1rem;
 		float: left;
-		width: 20%;
-	}
-	
+        width: 33%;
+        span{
+            margin-top:5px;
+            margin-bottom:5px;
+        }
+	}	
 	
 	&__product {
 		padding: 1rem;
-		// width: 33.33333%;
-		// float: left;
 		position: relative;
 		cursor: pointer;
 		background: #fff;
 		box-shadow: $product-box-shadow;
 		border-radius: 4px;
-	}
-	
+	}	
 			
 	// product image wrapper
 	&__img-wrapper {
@@ -136,40 +122,37 @@ $product-box-shadow: 0px 0px 0px 1px $light-gray;
 		height: 100%;
 	}
 	
-	
-		// product image
-		&__img {
-			max-width: 100%;
-			height: 70px;
-      width: 70px;
-			max-height: 100%;
-		}
-	
+    // product image
+    &__img {
+        max-width: 100%;
+        height: 70px;
+        width: 70px;
+        max-height: 100%;
+    }	
 	
 	//	product title
 	&__title {
-		margin-top: .5rem;
+		margin-top: 15px;
 		display: block;
-		font-size: 1.125em;
-		color: $title-color;
-    margin-bottom: .5rem;
+		font-size: 14px;
+        margin-bottom:15px;
 	}
 	
-	&__price {
-		font-weight: bold;
+	&__price {		
 		letter-spacing: .4px;
-    .cost {
-      color:$blue-color;
-      font-size: 1.3em;
-    }
+        .cost {
+            //color:$cyan;
+            font-size: 14px;
+            font-weight: bold;
+        }
 	}
   	&__time {
-      display: block;
-    .days {
-      font-weight: bold;
-    }
+        display: block;
+        .days {
+            font-size: 14px;
+            font-weight: bold;
+        }
 	}
-
 }
 
 // progress bar
@@ -180,9 +163,7 @@ $product-box-shadow: 0px 0px 0px 1px $light-gray;
 }
 .progress-bar {
   min-width: 1%;
-  span {
-    color: red;
-  }
+  background-color: $cyan;
 }
 
 </style>
