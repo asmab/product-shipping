@@ -40,7 +40,6 @@
 
           <div class="tab-content">
             <ProductList :sortedItems="bestDeals"/>
-            {{ bestDeals}}
           </div>
         </div>
         
