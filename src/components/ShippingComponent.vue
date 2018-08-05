@@ -5,8 +5,10 @@
         <!-- Tab 1 : Cheapest -->
         <input type="radio" name="tabs" id="tab1" checked>
         <div class="tab-label-content" id="tab1-content">
-          <label for="tab1">Cheapest<br>
+          <label for="tab1">
+            
             <span class="details-wrapper">
+              Cheapest<br>
               <span class="cost"> {{cheapest.cost}} </span><span class="currency"> {{cheapest.currency}}</span>
             </span>
           </label>          
@@ -18,8 +20,9 @@
         <!-- Tab 2 : Fastest -->
         <input type="radio" name="tabs" id="tab2">
         <div class="tab-label-content" id="tab2-content">
-          <label for="tab2">Fastest<br>
+          <label for="tab2">
             <span class="details-wrapper">
+              Fastest<br>
               <span class="days"> {{fastest.lead_time}} </span><span class="info"> {{lead_time_days}}</span>
             </span>
           </label>          
@@ -31,8 +34,9 @@
         <!-- Tab 3 : Best -->
         <input type="radio" name="tabs" id="tab3">
         <div class="tab-label-content" id="tab3-content">
-          <label for="tab3">Best<br>
+          <label for="tab3">
             <span class="details-wrapper">
+              Best<br>
               <span class="days"> {{bestDealDetails.cost}}<span class="currency"> {{cheapest.currency}}</span> / </span>
               <span class="days"> {{bestDealDetails.lead_time}} days </span>
             </span>
@@ -77,7 +81,7 @@ export default {
     }
   },
   watch: {
-  	itemsSortedByPrice() {
+  	productList() {
       this.cheapest = this.itemsSortedByPrice[0]
       this.fastest = this.itemsSortedByTime[0]
       this.lead_time_days = this.fastest.lead_time > 1 ? 'days' : 'day'
@@ -88,12 +92,15 @@ export default {
     getBestDeals(cheapestList,fastestList){
       var bestDealsList = []
 
+      //BestDeals
       cheapestList.forEach(function (value1, i){
           fastestList.forEach(function (value2, j){
             if (value1 === value2) bestDealsList.push({product: value1, index: i+j})
         })
       })
+      // bestDealsProduct sortedBy sum(indexes)
       bestDealsList = bestDealsList.sort(function(a, b){return a.index-b.index})
+      // remove indexes form bestDealsList and return list of product objects
       return  bestDealsList.map(obj => obj.product)
     }
   }
@@ -155,8 +162,8 @@ input[type="radio"][name="tabs"] {
 
 label {
   cursor: pointer;
-  color: rgba(255,255,255,0.8);
-  background-color: $cyan;
+  color: $tab-element-color;
+  background-color: $blue;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
@@ -164,20 +171,21 @@ label {
   height: 56px;
   transition: color 0.2s ease;
   width: 100%;
-  font-size: 14px;
+  font-size: $font_medium;
 
   .details-wrapper{
+    line-height: 2px;
     .cost,.days{
-      font-size: 14px;
+      font-size: $font_medium;
     }
     .currency,.info{
-      font-size: 12px;
+      font-size: $font_small;
     }
   }
 }
 
 .slide {
-  background: $yellow;
+  background: $orange;
   width: calc(100% / #{$num-of-tabs});
   height: 4px;
   position: absolute;
@@ -188,11 +196,11 @@ label {
 
 .tab-label-content {
   width: 100%;
+  border-right: 1px solid $tab-element-color;
     .tab-content {
       position: absolute;
       top: 60px;
       left: 0px;
-      line-height: 130%;
       display: none;
     }
 }

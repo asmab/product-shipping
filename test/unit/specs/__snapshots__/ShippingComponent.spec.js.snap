@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Shipping component Shipping component looks as expected 1`] = `
+<div class="main-content">
+    <div class="tab-wrap">
+        <input type="radio" name="tabs" id="tab1" checked="checked">
+        <div id="tab1-content" class="tab-label-content">
+            <label for="tab1"><span class="details-wrapper">
+            Cheapest<br> <span class="cost"> 62.98 </span><span class="currency"> sek</span></span>
+            </label>
+            <div class="tab-content">
+                <productlist-stub sorteditems="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"></productlist-stub>
+            </div>
+        </div>
+        <input type="radio" name="tabs" id="tab2">
+        <div id="tab2-content" class="tab-label-content">
+            <label for="tab2"><span class="details-wrapper">
+            Fastest<br> <span class="days"> 1 </span><span class="info"> day</span></span>
+            </label>
+            <div class="tab-content">
+                <productlist-stub sorteditems="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"></productlist-stub>
+            </div>
+        </div>
+        <input type="radio" name="tabs" id="tab3">
+        <div id="tab3-content" class="tab-label-content">
+            <label for="tab3"><span class="details-wrapper">
+            Best<br> <span class="days"> 62.98<span class="currency"> sek</span> / </span> <span class="days"> 2 days </span></span>
+            </label>
+            <div class="tab-content">
+                <productlist-stub sorteditems="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"></productlist-stub>
+            </div>
+        </div>
+        <div class="slide"></div>
+    </div>
+</div>
+`;
