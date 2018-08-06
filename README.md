@@ -1,6 +1,6 @@
 # product-shipping
 
-> A Vue.js  + Webpack App 
+> A Vue.js  + Webpack App  .Demo : [product-shipping](http://product-shipping.herokuapp.com/#/)<br> 
 
 ## Synopsis
 
