@@ -1,27 +1,66 @@
 # product-shipping
 
-> A Vue.js project
+> A Vue.js  + Webpack App  .Demo : [product-shipping](http://product-shipping.herokuapp.com/#/)<br> 
 
-## Build Setup
+## Synopsis
+
+Functional requirements :
+- Fetching the items from (products.JSON) and render them on the main page .
+- Sorting products based on either the cheapest price or the fastest lead time.
+- Getting products best deals (price/time Ratio) - Bonus
+
+![](screenshot.png) 
+
+## Libraries used
+* VueJs
+* Webpack
+* Sass
+* Vue-router
+* Bootstrap 4
+* Express 4
+* Jest
+* Heroku 7
+
+## Getting started
 
 ``` bash
-# install dependencies
+
+git clone git@github.com:asmab/product-shipping.git
+
+cd product-shipping
+
 npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
+npm run dev 
+
+```
+serve with hot reload : Open [http://localhost:8080](http://localhost:8080)<br>
 
 # build for production with minification
+```
 npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Running the tests
+```
+npm run unit
+```
+
+## Deployment : deploy to Heroku
+
+1- Create a Heroku app.
+```
+heroku create <product-shipping>
+```
+2- Configure the project so that Heroku can serve up the vue code.
+ Create server.js : [Express](https://expressjs.com/) script that Heroku can use to start a web server
+
+```
+npm run start
+```
+
+3- Push and deploy
+ Add Heroku remote repository:
+```
+heroku git:remote --app <product-shipping> && git add . && git commit -a -m "commit message" && git push heroku master
+```
