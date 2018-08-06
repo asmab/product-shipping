@@ -24,7 +24,7 @@
                     </span>
 
                     <!-- Product lead time - Progress-->
-                    <div class="progressbar-wrapper">
+                    <div class="progress">
                         <div class="progress-bar progress-bar-striped progress-bar-animated" 
                         role="progressbar"
                         :style="getWidth(product.lead_time)">
@@ -147,7 +147,7 @@ $light-gray: #eee;
 
 // progress bar
 
-.progressbar-wrapper {
+.progress {
     border-radius: 1px;
     margin-bottom: 2px;
 
